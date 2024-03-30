@@ -1,0 +1,33 @@
+{
+  "originHash" : "4482ab45722756f0d31faf3b9097eee73a710afba8e127caebad117f1e65efc1",
+  "pins" : [
+    {
+      "identity" : "progress.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jkandzi/Progress.swift",
+      "state" : {
+        "revision" : "fed6598735d7982058690acf8f52a0a5fdaeb3e0",
+        "version" : "0.4.0"
+      }
+    },
+    {
+      "identity" : "universalis-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Eisenhuth/universalis-swift/",
+      "state" : {
+        "branch" : "master",
+        "revision" : "23ebcbc0ffa9733e8dc06c2d785b7ef1c174de7f"
+      }
+    },
+    {
+      "identity" : "xivapi-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Eisenhuth/xivapi-swift",
+      "state" : {
+        "branch" : "master",
+        "revision" : "48cdb92022548e02ff41c47d47e81b6fa9897286"
+      }
+    }
+  ],
+  "version" : 3
+}
