@@ -29,6 +29,7 @@ struct Sleuth{
                 
                 var itemNames = [Int : String]() //storing itemNames here to limit xivapi calls
                 var results = [String]()
+                var runningTotal = 0
                 
                 
                 print("fetching IDs of marketable items")
@@ -41,11 +42,7 @@ struct Sleuth{
                 for chunk in Progress(chunks ?? []) {                    
                     var result = await universalis.getCurrentData(worldDcRegion: world, itemIds: chunk, queryItems: nil)
                     
-                    while result == nil {
-                        #if DEBUG
-                        print("loading chunk failed, trying again") //this shouldn't happen
-                        #endif
-                        try await Task.sleep(for: .seconds(1))
+                    while result == nil { //this shouldn't happen
                         result = await universalis.getCurrentData(worldDcRegion: world, itemIds: chunk, queryItems: nil)
                     }
                     
@@ -62,12 +59,18 @@ struct Sleuth{
                                             if names.contains(retainerName){
                                                 
                                                 if !itemNames.keys.contains(value.itemID) {
-                                                    let itemName = await xivapi.getItemName(itemId: value.itemID)?.Name ?? value.itemID.description
+                                                    var itemName = await xivapi.getItemName(itemId: value.itemID)?.Name
+                                                    
+                                                    while itemName == nil { //this shouldn't happen
+                                                        itemName = await xivapi.getItemName(itemId: value.itemID)?.Name
+                                                    }
+                                                    
                                                     itemNames[value.itemID] = itemName
                                                 }
                                                 
                                                 let result = "\(retainerName) - \(itemNames[value.itemID] ?? value.itemID.description) x\(listing.quantity)"
                                                 results.append(result)
+                                                runningTotal += listing.taxedTotal
                                             }
                                         }
                                     }
@@ -79,6 +82,7 @@ struct Sleuth{
                 if results.count > 0 {
                     print("-- results: \(results.count) --")
                     results.sorted().forEach { print($0) }
+                    print("total value: \(runningTotal.formatted(.number)) gil")
                 } else {
                     print("no matches")
                 }
