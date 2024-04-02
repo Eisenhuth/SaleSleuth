@@ -14,6 +14,7 @@
 		0B393D752BB882EC00E8B2E6 /* universalis-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 0B393D742BB882EC00E8B2E6 /* universalis-swift */; };
 		0B96D3372BB89087003D5F43 /* universalis-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 0B96D3362BB89087003D5F43 /* universalis-swift */; };
 		0B96D33A2BB8909D003D5F43 /* Progress in Frameworks */ = {isa = PBXBuildFile; productRef = 0B96D3392BB8909D003D5F43 /* Progress */; };
+		0BC28AD02BBBD60C00153D0B /* Rainbow in Frameworks */ = {isa = PBXBuildFile; productRef = 0BC28ACF2BBBD60C00153D0B /* Rainbow */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,6 +43,7 @@
 				0B96D3372BB89087003D5F43 /* universalis-swift in Frameworks */,
 				0B96D33A2BB8909D003D5F43 /* Progress in Frameworks */,
 				0B393D752BB882EC00E8B2E6 /* universalis-swift in Frameworks */,
+				0BC28AD02BBBD60C00153D0B /* Rainbow in Frameworks */,
 				0B393D6F2BB7F23800E8B2E6 /* xivapi-swift in Frameworks */,
 				0B393D692BB7F0D000E8B2E6 /* universalis-swift in Frameworks */,
 			);
@@ -97,6 +99,7 @@
 				0B393D742BB882EC00E8B2E6 /* universalis-swift */,
 				0B96D3362BB89087003D5F43 /* universalis-swift */,
 				0B96D3392BB8909D003D5F43 /* Progress */,
+				0BC28ACF2BBBD60C00153D0B /* Rainbow */,
 			);
 			productName = SaleSleuth;
 			productReference = 0B393D522BB7A2C600E8B2E6 /* SaleSleuth */;
@@ -130,6 +133,7 @@
 				0B393D6D2BB7F23800E8B2E6 /* XCRemoteSwiftPackageReference "xivapi-swift" */,
 				0B96D3352BB89087003D5F43 /* XCRemoteSwiftPackageReference "universalis-swift" */,
 				0B96D3382BB8909D003D5F43 /* XCRemoteSwiftPackageReference "Progress" */,
+				0BC28ACE2BBBD60C00153D0B /* XCRemoteSwiftPackageReference "Rainbow" */,
 			);
 			productRefGroup = 0B393D532BB7A2C600E8B2E6 /* Products */;
 			projectDirPath = "";
@@ -343,6 +347,14 @@
 				minimumVersion = 0.4.0;
 			};
 		};
+		0BC28ACE2BBBD60C00153D0B /* XCRemoteSwiftPackageReference "Rainbow" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Rainbow";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -368,6 +380,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0B96D3382BB8909D003D5F43 /* XCRemoteSwiftPackageReference "Progress" */;
 			productName = Progress;
+		};
+		0BC28ACF2BBBD60C00153D0B /* Rainbow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0BC28ACE2BBBD60C00153D0B /* XCRemoteSwiftPackageReference "Rainbow" */;
+			productName = Rainbow;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

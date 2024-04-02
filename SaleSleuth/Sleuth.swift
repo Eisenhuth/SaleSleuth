@@ -2,6 +2,7 @@ import Foundation
 import universalis_swift
 import xivapi_swift
 import Progress
+import Rainbow
 
 @main
 struct Sleuth{
@@ -11,7 +12,9 @@ struct Sleuth{
         let universalis = UniversalisClient()
         let xivapi = xivapiClient()
         
-        print("enter the World on which to check the market")
+        let textColor = "#F05138"
+        
+        print("enter the World on which to check the market".hex(textColor))
         if let world = readLine() {
             
             
@@ -22,7 +25,7 @@ struct Sleuth{
                 }
             }
             
-            print("enter the Retainer Names you want to look up (comma separated)")
+            print("enter the Retainer Names you want to look up (comma separated)".hex(textColor))
             if let input = readLine() {
                 
                 let names: [String] = input.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
@@ -33,13 +36,13 @@ struct Sleuth{
                 var runningTotal = 0
                 
                 
-                print("fetching IDs of marketable items")
+                print("fetching ItemIDs of marketable items..".hex(textColor))
                 let marketableItems = await universalis.getMarketableItems()
                 let chunks = marketableItems?.chunked(into: 100)
-                print("split \(marketableItems?.count ?? 0) itemIDs into \(chunks?.count ?? 0) chunks")
+                print("total marketable items: \(marketableItems?.count ?? 0)".green)
                 
-                print("fetching \(world) market data")
-                for chunk in Progress(chunks ?? []) {
+                print("fetching \(world) market data".hex(textColor))
+                for chunk in Progress(chunks ?? [], configuration: [ProgressBarLine(), ProgressPercent(decimalPlaces: 2), ProgressTimeEstimates()]) {
                     var currentData = await universalis.getCurrentData(worldDcRegion: world, itemIds: chunk, queryItems: nil)
                     
                     while currentData == nil { //this shouldn't happen
@@ -53,8 +56,8 @@ struct Sleuth{
                     }
                 }
                 
-                print("going through market data")
-                for data in Progress(marketData) {
+                print("processing \(world) market data".hex(textColor))
+                for data in Progress(marketData, configuration: [ProgressBarLine(), ProgressPercent(decimalPlaces: 2), ProgressTimeEstimates()]) {
                     if let listings = data.listings {
                         
                         let itemID = data.itemID
@@ -84,18 +87,18 @@ struct Sleuth{
                 }
                 
                 if results.count > 0 {
-                    print("-- results: \(results.count) --")
+                    print("-- results: \(results.count) --".green)
                     results.sorted().forEach { print($0) }
                     print("total value: \(runningTotal.formatted(.number)) gil")
                 } else {
-                    print("no matches")
+                    print("no matches".red)
                 }
                 
             } else {
-                print("no names entered, exiting")
+                print("no names entered, exiting".red)
             }
         } else {
-            print("no world entered, exiting")
+            print("no world entered, exiting".red)
         }
         
         
