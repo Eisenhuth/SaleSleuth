@@ -28,6 +28,7 @@ struct Sleuth{
                 let names: [String] = input.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
                 
                 var itemNames = [Int : String]() //storing itemNames here to limit xivapi calls
+                var marketData = [CurrentlyShownView]()
                 var results = [String]()
                 var runningTotal = 0
                 
@@ -36,49 +37,52 @@ struct Sleuth{
                 let marketableItems = await universalis.getMarketableItems()
                 let chunks = marketableItems?.chunked(into: 100)
                 print("split \(marketableItems?.count ?? 0) itemIDs into \(chunks?.count ?? 0) chunks")
-                print("going through chunks")
                 
-                
-                for chunk in Progress(chunks ?? []) {                    
-                    var result = await universalis.getCurrentData(worldDcRegion: world, itemIds: chunk, queryItems: nil)
+                print("fetching \(world) market data")
+                for chunk in Progress(chunks ?? []) {
+                    var currentData = await universalis.getCurrentData(worldDcRegion: world, itemIds: chunk, queryItems: nil)
                     
-                    while result == nil { //this shouldn't happen
-                        result = await universalis.getCurrentData(worldDcRegion: world, itemIds: chunk, queryItems: nil)
+                    while currentData == nil { //this shouldn't happen
+                        currentData = await universalis.getCurrentData(worldDcRegion: world, itemIds: chunk, queryItems: nil)
                     }
                     
-                    if let values = result?.items?.values {
+                    Task {
+                        currentData?.items?.values.forEach({ currentlyShownView in
+                            marketData.append(currentlyShownView)
+                        })
+                    }
+                }
+                
+                print("going through market data")
+                for data in Progress(marketData) {
+                    if let listings = data.listings {
                         
-                        //each value is a CurrentlyShownView
-                        for value in values {
-                            if let listings = value.listings {
-                                
-                                //go through each listing (ListingView)
-                                for listing in listings {
-                                    Task {
-                                        if let retainerName = listing.retainerName {
-                                            if names.contains(retainerName){
-                                                
-                                                if !itemNames.keys.contains(value.itemID) {
-                                                    var itemName = await xivapi.getItemName(itemId: value.itemID)?.Name
-                                                    
-                                                    while itemName == nil { //this shouldn't happen
-                                                        itemName = await xivapi.getItemName(itemId: value.itemID)?.Name
-                                                    }
-                                                    
-                                                    itemNames[value.itemID] = itemName
-                                                }
-                                                
-                                                let result = "\(retainerName) - \(itemNames[value.itemID] ?? value.itemID.description) x\(listing.quantity)"
-                                                results.append(result)
-                                                runningTotal += listing.taxedTotal
-                                            }
+                        let itemID = data.itemID
+                        
+                        for listing in listings {
+                            if let retainerName = listing.retainerName {
+                                if names.contains(retainerName){
+                                    
+                                    if !itemNames.keys.contains(itemID) {
+                                        var itemName = await xivapi.getItemName(itemId: itemID)?.Name
+                                        
+                                        while itemName == nil { //this shouldn't happen
+                                            itemName = await xivapi.getItemName(itemId: itemID)?.Name
                                         }
+                                        
+                                        itemNames[itemID] = itemName
                                     }
+                                    
+                                    let result = "\(retainerName) - \(itemNames[itemID] ?? itemID.description) x\(listing.quantity)"
+                                    
+                                    results.append(result)
+                                    runningTotal += listing.taxedTotal
                                 }
                             }
                         }
                     }
                 }
+                
                 if results.count > 0 {
                     print("-- results: \(results.count) --")
                     results.sorted().forEach { print($0) }
