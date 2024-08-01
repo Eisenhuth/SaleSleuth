@@ -18,7 +18,7 @@ struct Sleuth{
         if let world = readLine() {
             
             
-            if let worlds = await universalis.getWorlds() {
+            if let worlds = await universalis.getWorlds().result {
                 if !worlds.contains(where: { $0.name == world }) {
                     print("world not recognized, exiting")
                     exit(0)
@@ -37,16 +37,18 @@ struct Sleuth{
                 
                 
                 print("fetching ItemIDs of marketable items..".hex(textColor))
-                let marketableItems = await universalis.getMarketableItems()
+                let marketableItems = await universalis.getMarketableItems().result
                 let chunks = marketableItems?.chunked(into: 100)
                 print("total marketable items: \(marketableItems?.count ?? 0)".green)
                 
                 print("fetching \(world) market data".hex(textColor))
                 for chunk in Progress(chunks ?? [], configuration: [ProgressBarLine(), ProgressPercent(decimalPlaces: 2), ProgressTimeEstimates()]) {
-                    var currentData = await universalis.getCurrentData(worldDcRegion: world, itemIds: chunk, queryItems: nil)
+                    var currentData = await universalis.getCurrentData(worldDcRegion: world, itemIds: chunk, queryItems: nil).result
                     
-                    while currentData == nil { //this shouldn't happen
-                        currentData = await universalis.getCurrentData(worldDcRegion: world, itemIds: chunk, queryItems: nil)
+                    while currentData == nil {
+                        try? await Task.sleep(for: .seconds(1))
+                        //this shouldn't happen
+                        currentData = await universalis.getCurrentData(worldDcRegion: world, itemIds: chunk, queryItems: nil).result
                     }
                     
                     Task {
@@ -67,13 +69,8 @@ struct Sleuth{
                                 if names.contains(retainerName){
                                     
                                     if !itemNames.keys.contains(itemID) {
-                                        var itemName = await xivapi.getItemName(itemId: itemID)?.Name
-                                        
-                                        while itemName == nil { //this shouldn't happen
-                                            itemName = await xivapi.getItemName(itemId: itemID)?.Name
-                                        }
-                                        
-                                        itemNames[itemID] = itemName
+                                        var itemName = await xivapi.getItemMinimal(itemID)?.name
+                                        itemNames[itemID] = itemName != nil ? itemName : itemID.description
                                     }
                                     
                                     let result = "\(retainerName) - \(itemNames[itemID] ?? itemID.description) x\(listing.quantity)"
