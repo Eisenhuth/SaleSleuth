@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Eisenhuth/xivapi-swift",
       "state" : {
-        "branch" : "beta",
-        "revision" : "690977b0c4d39b40e36749c547f47e8c70632af2"
+        "branch" : "master",
+        "revision" : "4eede8343b09d2cafb750fcb25c3ddb2aa44f058"
       }
     }
   ],

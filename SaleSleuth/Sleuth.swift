@@ -69,7 +69,7 @@ struct Sleuth{
                                 if names.contains(retainerName){
                                     
                                     if !itemNames.keys.contains(itemID) {
-                                        var itemName = await xivapi.getItemMinimal(itemID)?.name
+                                        let itemName = await xivapi.getItemMinimal(itemID)?.name
                                         itemNames[itemID] = itemName != nil ? itemName : itemID.description
                                     }
                                     
