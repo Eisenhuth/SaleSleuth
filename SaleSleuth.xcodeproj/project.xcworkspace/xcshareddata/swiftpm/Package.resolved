@@ -25,7 +25,7 @@
       "location" : "https://github.com/Eisenhuth/universalis-swift/",
       "state" : {
         "branch" : "master",
-        "revision" : "8dbe55d1ec8d172965d1c7abf762a141eac28e20"
+        "revision" : "ee978d4a47ab0b96c502d57fa340a0de40e1c0bd"
       }
     },
     {
@@ -34,7 +34,7 @@
       "location" : "https://github.com/Eisenhuth/xivapi-swift",
       "state" : {
         "branch" : "master",
-        "revision" : "5c02df6c0360cf9bfd023bac2bf0d3691a8c432f"
+        "revision" : "f7248967dd7921dab28d84c929ba2077450c32ca"
       }
     }
   ],
