@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		0B393D562BB7A2C600E8B2E6 /* Sleuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B393D552BB7A2C600E8B2E6 /* Sleuth.swift */; };
-		0B393D602BB7AEDA00E8B2E6 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B393D5F2BB7AEDA00E8B2E6 /* Array+Extensions.swift */; };
 		0B393D692BB7F0D000E8B2E6 /* universalis-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 0B393D682BB7F0D000E8B2E6 /* universalis-swift */; };
 		0B393D6F2BB7F23800E8B2E6 /* xivapi-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 0B393D6E2BB7F23800E8B2E6 /* xivapi-swift */; };
 		0B393D752BB882EC00E8B2E6 /* universalis-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 0B393D742BB882EC00E8B2E6 /* universalis-swift */; };
 		0B96D3372BB89087003D5F43 /* universalis-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 0B96D3362BB89087003D5F43 /* universalis-swift */; };
 		0B96D33A2BB8909D003D5F43 /* Progress in Frameworks */ = {isa = PBXBuildFile; productRef = 0B96D3392BB8909D003D5F43 /* Progress */; };
 		0BC28AD02BBBD60C00153D0B /* Rainbow in Frameworks */ = {isa = PBXBuildFile; productRef = 0BC28ACF2BBBD60C00153D0B /* Rainbow */; };
+		0BE8F8022D47EC99007B9381 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 0BE8F8012D47EC99007B9381 /* Algorithms */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,7 +32,6 @@
 /* Begin PBXFileReference section */
 		0B393D522BB7A2C600E8B2E6 /* SaleSleuth */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SaleSleuth; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B393D552BB7A2C600E8B2E6 /* Sleuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sleuth.swift; sourceTree = "<group>"; };
-		0B393D5F2BB7AEDA00E8B2E6 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +40,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B96D3372BB89087003D5F43 /* universalis-swift in Frameworks */,
+				0BE8F8022D47EC99007B9381 /* Algorithms in Frameworks */,
 				0B96D33A2BB8909D003D5F43 /* Progress in Frameworks */,
 				0B393D752BB882EC00E8B2E6 /* universalis-swift in Frameworks */,
 				0BC28AD02BBBD60C00153D0B /* Rainbow in Frameworks */,
@@ -72,7 +72,6 @@
 			isa = PBXGroup;
 			children = (
 				0B393D552BB7A2C600E8B2E6 /* Sleuth.swift */,
-				0B393D5F2BB7AEDA00E8B2E6 /* Array+Extensions.swift */,
 			);
 			path = SaleSleuth;
 			sourceTree = "<group>";
@@ -100,6 +99,7 @@
 				0B96D3362BB89087003D5F43 /* universalis-swift */,
 				0B96D3392BB8909D003D5F43 /* Progress */,
 				0BC28ACF2BBBD60C00153D0B /* Rainbow */,
+				0BE8F8012D47EC99007B9381 /* Algorithms */,
 			);
 			productName = SaleSleuth;
 			productReference = 0B393D522BB7A2C600E8B2E6 /* SaleSleuth */;
@@ -134,6 +134,7 @@
 				0B96D3352BB89087003D5F43 /* XCRemoteSwiftPackageReference "universalis-swift" */,
 				0B96D3382BB8909D003D5F43 /* XCRemoteSwiftPackageReference "Progress" */,
 				0BC28ACE2BBBD60C00153D0B /* XCRemoteSwiftPackageReference "Rainbow" */,
+				0BE8F8002D47EC99007B9381 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 			);
 			productRefGroup = 0B393D532BB7A2C600E8B2E6 /* Products */;
 			projectDirPath = "";
@@ -150,7 +151,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B393D562BB7A2C600E8B2E6 /* Sleuth.swift in Sources */,
-				0B393D602BB7AEDA00E8B2E6 /* Array+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,6 +359,14 @@
 				minimumVersion = 4.0.1;
 			};
 		};
+		0BE8F8002D47EC99007B9381 /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -389,6 +397,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0BC28ACE2BBBD60C00153D0B /* XCRemoteSwiftPackageReference "Rainbow" */;
 			productName = Rainbow;
+		};
+		0BE8F8012D47EC99007B9381 /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0BE8F8002D47EC99007B9381 /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

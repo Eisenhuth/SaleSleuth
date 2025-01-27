@@ -3,6 +3,7 @@ import universalis_swift
 import xivapi_swift
 import Progress
 import Rainbow
+import Algorithms
 
 @main
 struct Sleuth{
@@ -34,14 +35,14 @@ struct Sleuth{
         
         print("fetching ItemIDs of marketable items..".hex(textColor))
         let marketableItems = await universalis.getMarketableItems().result
-        let chunks = marketableItems?.chunked(into: 100)
+        guard let chunks = marketableItems?.chunks(ofCount: 100) else { exit(0) }
         print("total marketable items: \(marketableItems?.count ?? 0)".green)
         
         print("fetching \(world) market data".hex(textColor))
         var marketData = [CurrentlyShownView]()
 
-        for chunk in Progress(chunks ?? [], configuration: [ProgressBarLine(), ProgressPercent(decimalPlaces: 2), ProgressTimeEstimates()]) {
-            let currentData = await universalis.getCurrentData(worldDcRegion: world, itemIds: chunk)
+        for chunk in Progress(chunks, configuration: [ProgressBarLine(), ProgressPercent(decimalPlaces: 2), ProgressTimeEstimates()]) {
+            let currentData = await universalis.getCurrentData(worldDcRegion: world, itemIds: chunk.map { $0 })
             
             currentData.result?.items?.values.forEach({ currentlyShownView in
                 marketData.append(currentlyShownView)
@@ -58,7 +59,7 @@ struct Sleuth{
         var itemNames = [Int : String]()
         items?.forEach({ itemNames[$0.row_id] = $0.name })
                 
-        for data in Progress(matchingData, configuration: [ProgressBarLine(), ProgressPercent(decimalPlaces: 2), ProgressTimeEstimates()]) {
+        for data in matchingData {
             guard let listings = data.listings else { continue }
             let matches = listings.filter ({ retainerNames.contains($0.retainerName ?? "") })
             matches.forEach { listing in
