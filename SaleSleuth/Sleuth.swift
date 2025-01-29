@@ -1,7 +1,6 @@
 import Foundation
 import universalis_swift
 import xivapi_swift
-import Progress
 import Rainbow
 import Algorithms
 
@@ -12,6 +11,7 @@ struct Sleuth{
         
         let universalis = UniversalisClient()
         let xivapi = xivapiClient()
+        let maxTasks = 4
         
         let textColor = "#F05138"
         
@@ -39,14 +39,33 @@ struct Sleuth{
         print("total marketable items: \(marketableItems?.count ?? 0)".green)
         
         print("fetching \(world) market data".hex(textColor))
-        var marketData = [CurrentlyShownView]()
-
-        for chunk in Progress(chunks, configuration: [ProgressBarLine(), ProgressPercent(decimalPlaces: 2), ProgressTimeEstimates()]) {
-            let currentData = await universalis.getCurrentData(worldDcRegion: world, itemIds: chunk.map { $0 })
+        
+        let marketData = await withTaskGroup(of: [CurrentlyShownView].self) { group in
+            var runningTasks = 0
+            var chunkIterator = chunks.makeIterator()
+            var collected = [CurrentlyShownView]()
             
-            currentData.result?.items?.values.forEach({ currentlyShownView in
-                marketData.append(currentlyShownView)
-            })
+            while let chunk = chunkIterator.next() {
+                if runningTasks >= maxTasks {
+                    if let result = await group.next() { collected.append(contentsOf: result) }
+                    runningTasks -= 1
+                }
+                
+                group.addTask {
+                    let currentData = await universalis.getCurrentData(worldDcRegion: world, itemIds: chunk.map { $0 })
+                    if currentData.statusCode != 200 { print("[\(currentData.statusCode?.description ?? "")] - failed to fetch data for \(chunk)") }
+                    
+                    return currentData.result?.items?.map { $0.value } ?? []
+                }
+                
+                runningTasks += 1
+            }
+            
+            for await listing in group {
+                collected.append(contentsOf: listing)
+            }
+            
+            return collected
         }
         
         let retainerNames: [String] = input.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }

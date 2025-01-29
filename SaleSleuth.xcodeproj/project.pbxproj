@@ -12,7 +12,6 @@
 		0B393D6F2BB7F23800E8B2E6 /* xivapi-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 0B393D6E2BB7F23800E8B2E6 /* xivapi-swift */; };
 		0B393D752BB882EC00E8B2E6 /* universalis-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 0B393D742BB882EC00E8B2E6 /* universalis-swift */; };
 		0B96D3372BB89087003D5F43 /* universalis-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 0B96D3362BB89087003D5F43 /* universalis-swift */; };
-		0B96D33A2BB8909D003D5F43 /* Progress in Frameworks */ = {isa = PBXBuildFile; productRef = 0B96D3392BB8909D003D5F43 /* Progress */; };
 		0BC28AD02BBBD60C00153D0B /* Rainbow in Frameworks */ = {isa = PBXBuildFile; productRef = 0BC28ACF2BBBD60C00153D0B /* Rainbow */; };
 		0BE8F8022D47EC99007B9381 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 0BE8F8012D47EC99007B9381 /* Algorithms */; };
 /* End PBXBuildFile section */
@@ -41,7 +40,6 @@
 			files = (
 				0B96D3372BB89087003D5F43 /* universalis-swift in Frameworks */,
 				0BE8F8022D47EC99007B9381 /* Algorithms in Frameworks */,
-				0B96D33A2BB8909D003D5F43 /* Progress in Frameworks */,
 				0B393D752BB882EC00E8B2E6 /* universalis-swift in Frameworks */,
 				0BC28AD02BBBD60C00153D0B /* Rainbow in Frameworks */,
 				0B393D6F2BB7F23800E8B2E6 /* xivapi-swift in Frameworks */,
@@ -97,7 +95,6 @@
 				0B393D6E2BB7F23800E8B2E6 /* xivapi-swift */,
 				0B393D742BB882EC00E8B2E6 /* universalis-swift */,
 				0B96D3362BB89087003D5F43 /* universalis-swift */,
-				0B96D3392BB8909D003D5F43 /* Progress */,
 				0BC28ACF2BBBD60C00153D0B /* Rainbow */,
 				0BE8F8012D47EC99007B9381 /* Algorithms */,
 			);
@@ -132,7 +129,6 @@
 			packageReferences = (
 				0B393D6D2BB7F23800E8B2E6 /* XCRemoteSwiftPackageReference "xivapi-swift" */,
 				0B96D3352BB89087003D5F43 /* XCRemoteSwiftPackageReference "universalis-swift" */,
-				0B96D3382BB8909D003D5F43 /* XCRemoteSwiftPackageReference "Progress" */,
 				0BC28ACE2BBBD60C00153D0B /* XCRemoteSwiftPackageReference "Rainbow" */,
 				0BE8F8002D47EC99007B9381 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 			);
@@ -343,14 +339,6 @@
 				kind = branch;
 			};
 		};
-		0B96D3382BB8909D003D5F43 /* XCRemoteSwiftPackageReference "Progress" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/jkandzi/Progress.swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.4.0;
-			};
-		};
 		0BC28ACE2BBBD60C00153D0B /* XCRemoteSwiftPackageReference "Rainbow" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Rainbow";
@@ -387,11 +375,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0B96D3352BB89087003D5F43 /* XCRemoteSwiftPackageReference "universalis-swift" */;
 			productName = "universalis-swift";
-		};
-		0B96D3392BB8909D003D5F43 /* Progress */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0B96D3382BB8909D003D5F43 /* XCRemoteSwiftPackageReference "Progress" */;
-			productName = Progress;
 		};
 		0BC28ACF2BBBD60C00153D0B /* Rainbow */ = {
 			isa = XCSwiftPackageProductDependency;
