@@ -52,7 +52,7 @@ struct Sleuth{
                 }
                 
                 group.addTask {
-                    let currentData = await universalis.getCurrentData(worldDcRegion: world, itemIds: chunk.map { $0 })
+                    let currentData = await universalis.getCurrentData(worldDcRegion: world, itemIds: chunk.map { $0 }, queries: [.entries(0)])
                     if currentData.statusCode != 200 { print("[\(currentData.statusCode?.description ?? "")] - failed to fetch data for \(chunk)") }
                     
                     return currentData.result?.items?.map { $0.value } ?? []
